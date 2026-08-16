@@ -1,0 +1,31 @@
+services:
+  grapple-drive:
+    # Override with a version tag or digest through GRAPPLE_IMAGE.
+    image: ${GRAPPLE_IMAGE:-ghcr.io/kayak503/seafile-facelift:latest}
+    container_name: grapple-drive
+    restart: unless-stopped
+    environment:
+      # These values are deployment-owned and cannot be changed in the browser.
+      SEAFILE_URL: ${SEAFILE_URL:?Set SEAFILE_URL in .env}
+      PUBLIC_SEAFILE_URL: ${PUBLIC_SEAFILE_URL:?Set PUBLIC_SEAFILE_URL in .env}
+      APP_URL: ${APP_URL:?Set APP_URL in .env}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      APP_NAME: ${APP_NAME:-Grapple Drive}
+      APP_ACCENT: ${APP_ACCENT:-#2563EB}
+      ADMIN_URL: ${ADMIN_URL:-}
+    ports:
+      - '${GRAPPLE_PORT:-8082}:3000'
+    networks:
+      - seafile
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+networks:
+  seafile:
+    name: ${SEAFILE_NETWORK:-seafile}
+    external: true
