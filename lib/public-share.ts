@@ -38,7 +38,7 @@ export function passwordDigest(password: string) {
   return createHmac('sha256', secret()).update(password).digest('hex');
 }
 export function shareCookieName(token: string) {
-  return `grapple_share_${createHash('sha256').update(token).digest('hex').slice(0, 20)}`;
+  return `seafile_facelift_share_${createHash('sha256').update(token).digest('hex').slice(0, 20)}`;
 }
 export function shareCookieValue(token: string) {
   return createHmac('sha256', secret()).update(`unlocked:${token}`).digest('base64url');
@@ -62,7 +62,7 @@ export function sealPublicShare(value: PublicShare) {
   return Buffer.concat([iv, cipher.getAuthTag(), body]).toString('base64url');
 }
 
-/** Opens a Grapple share payload, returning null for malformed, tampered, or unsafe data. */
+/** Opens a Seafile-Facelift share payload, returning null for malformed, tampered, or unsafe data. */
 export function openPublicShare(token: string): PublicShare | null {
   try {
     const raw = Buffer.from(token, 'base64url');

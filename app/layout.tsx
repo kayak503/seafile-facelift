@@ -3,9 +3,13 @@ import '@fontsource-variable/roboto';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'Grapple Drive', template: '%s · Grapple Drive' },
+  title: { default: 'Seafile-Facelift', template: '%s · Seafile-Facelift' },
   description: 'A modern, secure file workspace powered by Seafile.',
   manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [{ url: '/favicon.svg?v=2', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg?v=2',
+  },
 };
 export const viewport: Viewport = {
   width: 'device-width',

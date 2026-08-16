@@ -8,7 +8,7 @@ const MAX_AGE = 60 * 60 * 12;
 export type Session = { token: string; username: string; issuedAt: number };
 type SessionCookie = { id: string; username: string; issuedAt: number };
 type StoredSession = Session & { expiresAt: number };
-const storeKey = Symbol.for('seafile-cover.sessions');
+const storeKey = Symbol.for('seafile-facelift.sessions');
 const sessionStore = ((globalThis as typeof globalThis & { [storeKey]?: Map<string, StoredSession> })[
   storeKey
 ] ??= new Map());
