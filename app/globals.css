@@ -87,25 +87,23 @@ svg {
 .brand-mark {
   display: grid;
   place-items: center;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 12px;
+  background: transparent;
 }
 .mini-mark {
   width: 36px;
   height: 36px;
 }
 .mini-mark svg {
-  width: 21px;
+  width: 32px;
+  height: 32px;
 }
 .brand-mark {
   width: 52px;
   height: 52px;
-  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 .brand-mark svg {
-  width: 28px;
-  height: 28px;
+  width: 48px;
+  height: 48px;
 }
 .search-wrap {
   height: 46px;
@@ -285,14 +283,26 @@ svg {
 .sidebar-bottom {
   border-top: 1px solid var(--line);
   padding: 16px 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
 }
 .sidebar-bottom a {
   font-size: 12px;
   color: var(--muted);
   text-decoration: none;
+  white-space: nowrap;
 }
 .sidebar-bottom a:hover {
   color: var(--accent);
+}
+.sidebar-bottom span {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.2;
+  opacity: 0.85;
+  white-space: nowrap;
 }
 .content {
   padding: 36px clamp(24px, 4vw, 64px) 80px;
@@ -1004,6 +1014,12 @@ svg {
 .toast span {
   color: #64d898;
 }
+.toast span svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  stroke-width: 2.4;
+}
 .bottom-nav {
   display: none;
 }
@@ -1487,7 +1503,9 @@ body {
 }
 .sidebar {
   top: 64px;
-  min-height: calc(100vh - 64px);
+  height: calc(100vh - 64px);
+  min-height: 0;
+  overflow-y: auto;
   background: var(--bg);
   border-right: 0;
   padding: 10px 14px 18px;
@@ -1945,11 +1963,6 @@ body {
 .security-note.checking span {
   color: #80868b;
 }
-.sidebar-bottom {
-  display: grid;
-  gap: 10px;
-}
-
 /* Intentional selection, drag/drop, and upload feedback */
 .new-popover p {
   margin: 6px 8px 5px;
@@ -1982,10 +1995,10 @@ body {
   position: absolute;
   left: 18px;
   top: 18px;
-  width: 21px;
-  height: 21px;
-  border: 2px solid #747775;
-  border-radius: 50%;
+  width: 19px;
+  height: 19px;
+  border: 1.5px solid #747775;
+  border-radius: 5px;
   z-index: 2;
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   opacity: 0;
@@ -2031,6 +2044,11 @@ body {
   display: grid;
   place-items: center;
   font-size: 12px;
+}
+.selection-count > span svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.4;
 }
 .selection-actions {
   gap: 2px;
@@ -2295,6 +2313,12 @@ body {
   font-size: 12px;
   font-weight: 700;
 }
+.complete-check svg,
+.upload-state svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.4;
+}
 @media (max-width: 680px) {
   .selection-actions > button:not(.clear-selection) {
     display: none;
@@ -2413,10 +2437,10 @@ body {
   place-items: center;
 }
 .row-selector {
-  width: 25px;
-  height: 25px;
-  border: 2px solid var(--muted);
-  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--muted);
+  border-radius: 5px;
   background: var(--surface);
   color: #fff;
   display: grid;
@@ -2424,6 +2448,12 @@ body {
   padding: 0;
   font-size: 12px;
   font-weight: 800;
+}
+.row-selector svg,
+.grid-item .selection-indicator svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
 }
 .row-selector:hover {
   border-color: var(--accent);
@@ -2493,8 +2523,8 @@ html[data-theme='dark'] .file-row.selected {
     display: block;
   }
   .row-selector {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
   .profile-popover {
     position: fixed;
@@ -2751,6 +2781,7 @@ html[data-theme='dark'] .file-row.selected {
 .library-switcher-wrap {
   position: relative;
   min-width: 0;
+  transform: translateY(2px);
 }
 .library-switcher-wrap .library-switcher {
   width: 100%;
@@ -2760,7 +2791,9 @@ html[data-theme='dark'] .file-row.selected {
   border-radius: 13px;
   display: grid;
   grid-template-columns: 38px minmax(0, 1fr) 18px;
+  grid-template-rows: 1fr;
   align-items: center;
+  row-gap: 0;
   gap: 10px;
   padding: 5px 9px;
   text-align: left;
@@ -2788,6 +2821,12 @@ html[data-theme='dark'] .file-row.selected {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: normal;
+  line-height: normal;
+  text-transform: none;
 }
 .library-switcher-wrap .library-switcher small {
   font-size: 9px;
@@ -2800,6 +2839,9 @@ html[data-theme='dark'] .file-row.selected {
 .library-switcher-wrap .library-switcher strong {
   font-size: 14px;
   font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1.2;
+  text-transform: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2827,6 +2869,11 @@ html[data-theme='dark'] .file-row.selected {
 .library-popover .current-mark {
   margin-left: auto;
   color: var(--accent);
+}
+.library-popover .current-mark svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.3;
 }
 .star-toggle {
   width: 30px;
@@ -3102,6 +3149,11 @@ html[data-theme='dark'] .file-row.selected {
   place-items: center;
   background: #1e8e3e;
   color: #fff;
+}
+.share-success > span svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.4;
 }
 .share-success strong {
   font-size: 12px;
@@ -3623,6 +3675,63 @@ html[data-theme='dark'] .file-row.selected {
 .setup-instructions h3 {
   font-size: 12px;
   margin: 22px 0 8px;
+}
+.config-diagnostics {
+  display: grid;
+  border: 1px solid #e3e6ea;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.config-diagnostic {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid #e3e6ea;
+}
+.config-diagnostic:last-child {
+  border-bottom: 0;
+}
+.config-diagnostic-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.config-diagnostic-icon svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.4;
+}
+.config-diagnostic > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+.config-diagnostic strong {
+  font:
+    600 11px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+}
+.config-diagnostic small {
+  font-size: 11px;
+  line-height: 1.45;
+}
+.config-diagnostic.valid .config-diagnostic-icon {
+  color: #137333;
+  background: #e6f4ea;
+}
+.config-diagnostic.invalid .config-diagnostic-icon,
+.config-diagnostic.missing .config-diagnostic-icon {
+  color: #b3261e;
+  background: #fce8e6;
+}
+.config-diagnostic.checking .config-diagnostic-icon {
+  color: #5f6368;
+  background: #f1f3f4;
 }
 .setup-instructions pre {
   margin: 0;

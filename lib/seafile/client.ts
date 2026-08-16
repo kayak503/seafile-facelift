@@ -44,7 +44,7 @@ export type ManagedShareLink = ShareLink & {
   description?: string;
   passwordProtected: boolean;
 };
-const authSchemeKey = Symbol.for('seafile-cover.auth-schemes');
+const authSchemeKey = Symbol.for('seafile-facelift.auth-schemes');
 const authSchemes = ((globalThis as typeof globalThis & { [authSchemeKey]?: Map<string, AuthScheme> })[
   authSchemeKey
 ] ??= new Map());
@@ -81,8 +81,9 @@ function repoArray(value: unknown): RawRepo[] {
  */
 export class SeafileAdapter {
   readonly baseUrl: string;
-  constructor() {
-    this.baseUrl = requireConfig().seafileUrl;
+  constructor(baseUrl?: string) {
+    // Setup diagnostics may probe a valid internal URL before the remaining settings are ready.
+    this.baseUrl = baseUrl || requireConfig().seafileUrl;
   }
 
   authorizationHeader(token: string) {

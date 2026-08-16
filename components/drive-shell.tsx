@@ -239,7 +239,7 @@ export function DriveShell({ username, config }: { username: string; config: Pub
     currentLocation.current = { libraryId: library?.id, path };
   }, [library, path]);
   useEffect(() => {
-    const saved = localStorage.getItem('cover-theme');
+    const saved = localStorage.getItem('seafile-facelift-theme');
     const next =
       saved === 'dark' || saved === 'light'
         ? saved
@@ -248,7 +248,7 @@ export function DriveShell({ username, config }: { username: string; config: Pub
           : 'light';
     document.documentElement.dataset.theme = next;
     setThemeMode(next);
-    const savedView = localStorage.getItem('cover-view');
+    const savedView = localStorage.getItem('seafile-facelift-view');
     if (savedView === 'list' || savedView === 'grid') setView(savedView);
   }, []);
   useEffect(() => {
@@ -608,11 +608,11 @@ export function DriveShell({ username, config }: { username: string; config: Pub
     const next = themeMode === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
     setThemeMode(next);
-    localStorage.setItem('cover-theme', next);
+    localStorage.setItem('seafile-facelift-theme', next);
   }
   function changeView(next: View) {
     setView(next);
-    localStorage.setItem('cover-view', next);
+    localStorage.setItem('seafile-facelift-view', next);
   }
 
   const canEdit = Boolean(library && library.permission !== 'r');
@@ -670,7 +670,11 @@ export function DriveShell({ username, config }: { username: string; config: Pub
                 >
                   <Icon name="folder" />
                   <span>{value.name}</span>
-                  {library?.id === value.id && <span className="current-mark">✓</span>}
+                  {library?.id === value.id && (
+                    <span className="current-mark">
+                      <Icon name="check" />
+                    </span>
+                  )}
                 </button>
               ))}
               <div />
@@ -918,6 +922,7 @@ export function DriveShell({ username, config }: { username: string; config: Pub
           <a href={config.adminUrl || config.publicSeafileUrl} target="_blank">
             Open administration ↗
           </a>
+          <span title={`Seafile-Facelift ${config.version}`}>Version {config.version}</span>
         </div>
       </aside>
       {mobileNav && (
@@ -995,7 +1000,9 @@ export function DriveShell({ username, config }: { username: string; config: Pub
         {selected.size > 0 && (
           <div className="selection-bar">
             <span className="selection-count">
-              <span>✓</span>
+              <span>
+                <Icon name="check" />
+              </span>
               <strong>
                 {selected.size} {selected.size === 1 ? 'item' : 'items'} selected
               </strong>
@@ -1161,7 +1168,7 @@ export function DriveShell({ username, config }: { username: string; config: Pub
       )}{' '}
       {toast && (
         <div className={`toast ${toast.tone}`} role={toast.tone === 'error' ? 'alert' : 'status'}>
-          <span>{toast.tone === 'error' ? '!' : toast.tone === 'info' ? 'i' : '✓'}</span>
+          <span>{toast.tone === 'error' ? '!' : toast.tone === 'info' ? 'i' : <Icon name="check" />}</span>
           {toast.message}
         </div>
       )}
@@ -1593,7 +1600,7 @@ function FileView({
                   toggle(item, true);
                 }}
               >
-                {isSelected ? '✓' : ''}
+                {isSelected && <Icon name="check" />}
               </button>
               <button
                 className="more-button"
@@ -1637,7 +1644,7 @@ function FileView({
             aria-label={allSelected ? 'Deselect all files' : 'Select all files'}
             onClick={() => setSelected(allSelected ? new Set() : new Set(items.map(item => item.id)))}
           >
-            {allSelected ? '✓' : ''}
+            {allSelected && <Icon name="check" />}
           </button>
         </span>
         <span role="columnheader">Name</span>
@@ -1683,7 +1690,7 @@ function FileView({
                   toggle(item, true);
                 }}
               >
-                {isSelected ? '✓' : ''}
+                {isSelected && <Icon name="check" />}
               </button>
             </span>
             <span role="gridcell" className="file-name">
@@ -1782,7 +1789,7 @@ function UploadPanel({
                   : 'upload-state complete'
             }
           >
-            {failed.length ? '!' : active.length ? <span className="spinner dark" /> : '✓'}
+            {failed.length ? '!' : active.length ? <span className="spinner dark" /> : <Icon name="check" />}
           </span>
           <span>
             <strong>{title}</strong>
@@ -1853,7 +1860,11 @@ function UploadPanel({
                     Retry
                   </button>
                 )}
-                {task.status === 'complete' && <span className="complete-check">✓</span>}
+                {task.status === 'complete' && (
+                  <span className="complete-check">
+                    <Icon name="check" />
+                  </span>
+                )}
               </div>
             </article>
           ))}
@@ -2365,7 +2376,8 @@ function ShareDialog({ item, close }: { item: DriveItem; close: () => void }) {
         </div>
         <h2 id="share-title">Share “{displayName(item)}”</h2>
         <p>
-          Create a Grapple link that opens in a clean, branded viewer. Access rules are enforced by Seafile.
+          Create a Seafile-Facelift link that opens in a clean, branded viewer. Access rules are enforced by
+          Seafile.
         </p>
         {link ? (
           <>
@@ -2379,10 +2391,12 @@ function ShareDialog({ item, close }: { item: DriveItem; close: () => void }) {
               </div>
             </label>
             <div className="share-success">
-              <span>✓</span>
+              <span>
+                <Icon name="check" />
+              </span>
               <div>
                 <strong>Link ready</strong>
-                <p>The recipient sees Grapple Drive, not your Seafile workspace.</p>
+                <p>The recipient sees Seafile-Facelift, not your Seafile workspace.</p>
               </div>
             </div>
             <div className="modal-actions">

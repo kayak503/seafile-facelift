@@ -7,10 +7,10 @@ import {
   shareExpired,
 } from '@/lib/public-share';
 
-describe('Grapple public shares', () => {
+describe('Seafile-Facelift public shares', () => {
   beforeEach(() => {
     process.env.SEAFILE_URL = 'https://seafile.test';
-    process.env.APP_URL = 'https://grapple.test';
+    process.env.APP_URL = 'https://facelift.test';
     process.env.SESSION_SECRET = 'a-secure-test-secret-that-is-long-enough';
   });
   it('seals link details without exposing the upstream URL', () => {

@@ -15,15 +15,17 @@ RUN npm run build
 # The runtime contains only the standalone server and public/static assets.
 FROM node:22-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
-LABEL org.opencontainers.image.title="Grapple Drive" \
+ARG APP_VERSION=development
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0 APP_VERSION=${APP_VERSION}
+LABEL org.opencontainers.image.title="Seafile-Facelift" \
       org.opencontainers.image.description="A modern Seafile web interface" \
-      org.opencontainers.image.source="https://github.com/kayak503/Seafile-Facelift"
-RUN addgroup --system --gid 1001 cover && adduser --system --uid 1001 --ingroup cover cover
-COPY --from=builder --chown=cover:cover /app/public ./public
-COPY --from=builder --chown=cover:cover /app/.next/standalone ./
-COPY --from=builder --chown=cover:cover /app/.next/static ./.next/static
-USER cover
+      org.opencontainers.image.source="https://github.com/kayak503/Seafile-Facelift" \
+      org.opencontainers.image.version="${APP_VERSION}"
+RUN addgroup --system --gid 1001 facelift && adduser --system --uid 1001 --ingroup facelift facelift
+COPY --from=builder --chown=facelift:facelift /app/public ./public
+COPY --from=builder --chown=facelift:facelift /app/.next/standalone ./
+COPY --from=builder --chown=facelift:facelift /app/.next/static ./.next/static
+USER facelift
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=6s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:3000/api/health || exit 1
 STOPSIGNAL SIGTERM

@@ -36,7 +36,7 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: `NEXT_DIST_DIR=.next-e2e SEAFILE_URL=http://127.0.0.1:${seafilePort} PUBLIC_SEAFILE_URL=http://127.0.0.1:${seafilePort} APP_URL=http://127.0.0.1:${appPort} SESSION_SECRET=e2e-session-secret-that-is-at-least-32-characters APP_NAME='Grapple Drive' npm run dev -- --hostname 127.0.0.1 --port ${appPort}`,
+      command: `NEXT_DIST_DIR=.next-e2e SEAFILE_URL=http://127.0.0.1:${seafilePort} PUBLIC_SEAFILE_URL=http://127.0.0.1:${seafilePort} APP_URL=http://127.0.0.1:${appPort} SESSION_SECRET=e2e-session-secret-that-is-at-least-32-characters APP_NAME='Seafile-Facelift' npm run dev -- --hostname 127.0.0.1 --port ${appPort}`,
       url: `http://127.0.0.1:${appPort}/api/health`,
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,

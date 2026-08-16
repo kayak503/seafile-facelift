@@ -4,7 +4,8 @@ import { SeafileAdapter } from '@/lib/seafile';
 describe('SeafileAdapter', () => {
   beforeEach(() => {
     process.env.SEAFILE_URL = 'https://seafile.test';
-    process.env.APP_URL = 'https://cover.test';
+    process.env.PUBLIC_SEAFILE_URL = 'https://files.test';
+    process.env.APP_URL = 'https://facelift.test';
     process.env.SESSION_SECRET = 'a-secure-test-secret-that-is-long-enough';
   });
   afterEach(() => vi.restoreAllMocks());

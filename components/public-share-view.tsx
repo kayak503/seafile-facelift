@@ -13,7 +13,7 @@ type Props = {
   accent: string;
 };
 
-/** Recipient-facing viewer for encrypted Grapple share URLs. */
+/** Recipient-facing viewer for encrypted Seafile-Facelift share URLs. */
 export function PublicShareView({
   token,
   name,
@@ -32,7 +32,7 @@ export function PublicShareView({
   const extension = name.split('.').pop()?.toLowerCase() || '';
   const image = /^(png|jpe?g|gif|webp|svg)$/.test(extension);
   // Browser PDF viewers need the raw bytes to render. We remove their ordinary toolbar and keep
-  // Grapple's explicit download endpoint blocked, while acknowledging this is UI-level deterrence.
+  // Seafile-Facelift's explicit download endpoint blocked, while acknowledging this is UI-level deterrence.
   const restrictedPdf = extension === 'pdf' && !canDownload;
   async function unlock(event: React.FormEvent) {
     event.preventDefault();
@@ -57,7 +57,7 @@ export function PublicShareView({
     <main className="public-share-page" style={{ '--accent': accent } as React.CSSProperties}>
       <header>
         <div className="brand-mark">
-          <Icon name="files" />
+          <Icon name="drive" />
         </div>
         <strong>{appName}</strong>
       </header>
@@ -106,7 +106,7 @@ export function PublicShareView({
           <div className="shared-folder-state">
             <Icon name="folder" />
             <h2>Shared folder ready</h2>
-            <p>The folder is protected by this Grapple link and the owner’s Seafile permissions.</p>
+            <p>The folder is protected by this Seafile-Facelift link and the owner’s Seafile permissions.</p>
             {canDownload ? (
               <a className="primary button-link" href={`${source}&download=1`}>
                 <Icon name="download" />
